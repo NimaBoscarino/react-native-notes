@@ -48,9 +48,12 @@ export class ChatContainer extends React.Component {
   addMessage(message) {
     const props = this.props
     firebase.database().ref('messages/').push({
-      ...message,
       createdAt: new Date().getTime(),
-      avatar: `https://api.adorable.io/avatars/28/${props.name}`
+      ...message,
+      user: {
+        avatar: `https://api.adorable.io/avatars/28/${props.name}.jpg`,
+        ...message.user,
+      },
     });
   }
 
