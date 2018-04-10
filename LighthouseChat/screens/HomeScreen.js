@@ -20,7 +20,7 @@ export default class HomeScreen extends React.Component {
     super(props)
 
     this.state = {
-      name: "t"
+      name: Math.random().toString() // this should actually be ""
     }
 
     this.logIn = this.logIn.bind(this)
@@ -44,12 +44,15 @@ export default class HomeScreen extends React.Component {
   }
   
   render() {
+    const props = this.props
     const state = this.state
     return (
       <View style={styles.container1}>
         <View style={styles.container2}>
           {
-            state.name || (
+            state.name ? (
+              <ChatContainer name={state.name}/>
+            ) : (
               <TouchableHighlight
               onPress={this.logIn}
               >
@@ -62,9 +65,6 @@ export default class HomeScreen extends React.Component {
                 />
               </TouchableHighlight>
             )
-          }
-          {
-            !state.name || <ChatContainer/>
           }
         </View>
       </View>

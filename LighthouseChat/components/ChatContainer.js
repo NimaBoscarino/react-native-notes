@@ -5,25 +5,34 @@ import {
   StyleSheet
 } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat'
+import * as firebase from 'firebase';
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyC9I14GPn-qRzj7WmpAdh9MpM-7ACYFjmw",
+  authDomain: "lighthouse-chat.firebaseapp.com",
+  databaseURL: "https://lighthouse-chat.firebaseio.com",
+  projectId: "lighthouse-chat",
+  storageBucket: "lighthouse-chat.appspot.com",
+};
+
+firebase.initializeApp(firebaseConfig);
 
 export class ChatContainer extends React.Component {
-  state = {
-    messages: [],
+  constructor(props) {
+    super(props)
+
+    state = {
+      messages: [],
+    }  
+
+    this.addMessage = this.addMessage.bind(this)
+    this.startMessagesListening()
   }
 
   componentWillMount() {
     this.setState({
       messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: `https://api.adorable.io/avatars/50/nima`,
-          },
-        },
       ],
     })
   }
@@ -32,16 +41,38 @@ export class ChatContainer extends React.Component {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
+
+    this.addMessage(messages.slice(-1).pop())
+  }
+  
+  addMessage(message) {
+    const props = this.props
+    firebase.database().ref('messages/').push({
+      ...message,
+      createdAt: new Date().getTime(),
+      avatar: `https://api.adorable.io/avatars/28/${props.name}`
+    });
+  }
+
+  startMessagesListening() {
+    firebase.database().ref('messages/').on('value', (snapshot) => {
+      const messagesObj = snapshot.val();
+      const messages = Object.keys(messagesObj).map(msgKey => messagesObj[msgKey])
+      this.setState({
+        messages: messages.reverse()
+      })
+    });
   }
 
   render() {
+    const props = this.props
     return (
       <View style={styles.container}>
         <GiftedChat
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
           user={{
-            _id: 1,
+            _id: props.name,
           }}
         />
       </View>
