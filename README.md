@@ -2,7 +2,7 @@
 
 **REPO: https://github.com/NimaBoscarino/react-native-notes**
 
-#### As with everything else, I recommend taking a look at the documentation:
+#### As always, I recommend taking a look at the documentation:
 
 1. [**React Native docs**](https://facebook.github.io/react-native/)
 
