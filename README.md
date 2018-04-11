@@ -1,6 +1,7 @@
 # Week 9 Day 2: React Native
 
 **REPO: https://github.com/NimaBoscarino/react-native-notes**
+
 [Video](https://www.youtube.com/watch?v=D2svnE8aAeI)
 
 #### As always, I recommend taking a look at the documentation:
