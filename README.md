@@ -2,6 +2,8 @@
 
 **REPO: https://github.com/NimaBoscarino/react-native-notes**
 
+A zero-dependency method of navigation: https://gist.github.com/NimaBoscarino/e668e4061381c95e300669206d20a1a5
+
 [Video](https://www.youtube.com/watch?v=D2svnE8aAeI)
 
 #### As always, I recommend taking a look at the documentation:
